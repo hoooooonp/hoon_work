@@ -1,10 +1,20 @@
 import random
 import ssl
+import urllib.parse
 import certifi
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
 import requests
+import urllib.request
 from fastapi import HTTPException
+import platform
+import sys
+import os
+
+sysOS = platform.system()
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+
+from hoon_work import api_keys
 
 
 def bot_get_message_ts(slack_channel):
@@ -14,8 +24,8 @@ def bot_get_message_ts(slack_channel):
     global request_user
     global permission
 
-    member_list = ['member1', 'member2']
-    bot_token = 'your_bot_token'
+    member_list = ['U022XQUHUTZ']
+    bot_token = api_keys.bot_token
     ssl_context = ssl.create_default_context(cafile=certifi.where())
     client = WebClient(token=bot_token, ssl=ssl_context)
     channel = slack_channel
@@ -118,6 +128,30 @@ def run(get_text, request_user):
         else:
             print("입력 값 오류 발생")
             text += "입력값을 다시 확인해 주세요."
+
+
+
+    elif get_text[1] == "날씨":
+        text = call+'\n'
+        city = get_text[2]
+        
+        weather_key = api_keys.weather_api_key
+
+        url = f"http://api.weatherapi.com/v1/current.json"
+        params = {
+            'key': weather_key,
+            'q': city,
+            'lang': 'kr'
+        }
+        response = requests.get(url, params=params)
+        data = response.json()
+        if 'current' in data:
+            condition = data['current']['condition']['text']
+            temp_c = data['current']['temp_c']
+            text += f"{city}의 현재 날씨: {condition}, 온도: {temp_c}°C"
+        else:
+            text += f"오류: {data.get('error', {}).get('message', '알 수 없는 오류')}"
+
 
 
     # 예외 Case 및 환경 Print Handling
