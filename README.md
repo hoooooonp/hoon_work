@@ -7,4 +7,4 @@
 
 ## 목차
 1. Slack Bot을 활용한 스크립트 수행
- -> [참조 Link]([https://hoonp.notion.site/Slack-Bot-425e778ef08849ffaf6d636b9e2353cc?pvs=4](https://qahoon.notion.site/Slack-Bot-6696a7c420164fe3ba01bce8bbdce6cf?pvs=4))
+ -> [참조 Link]([https://hoonp.notion.site/Slack-Bot-425e778ef08849ffaf6d636b9e2353cc?pvs=4](https://qahoon.notion.site/Slack-Bot-6696a7c420164fe3ba01bce8bbdce6cf?pvs=4)
